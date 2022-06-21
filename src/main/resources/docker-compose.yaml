@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=euller
+      - POSTGRES_PASSWORD=12345
+    volumes:
+      - db:/db
+    networks:
+      - postgres_network
+volumes:
+  db: {}
+networks:
+  postgres_network: {}
