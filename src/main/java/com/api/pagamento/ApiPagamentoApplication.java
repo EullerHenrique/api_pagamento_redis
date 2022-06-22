@@ -42,6 +42,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 */
 @SpringBootApplication
 @EnableWebMvc
+//@EnableCaching: Ativa o recurso de gerenciamento de cache orientado a anotações do Spring
 @EnableCaching
 public class ApiPagamentoApplication {
 

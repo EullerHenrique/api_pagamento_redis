@@ -1,7 +1,9 @@
 version: "3.8"
+
 services:
+
   postgresql:
-    image: postgres
+    image: postgres:latest
     container_name: postgresql
     ports:
       - 5432:5432
@@ -10,10 +12,18 @@ services:
       - POSTGRES_USER=euller
       - POSTGRES_PASSWORD=12345
     volumes:
-      - db:/db
-    networks:
-      - postgres_network
-volumes:
-  db: {}
-networks:
-  postgres_network: {}
+      - ./data/postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: redis-server --requirepass 12345 --appendonly yes
+    #appendonly: yes - Utiliza o volume para armazenar os dados
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data
+
+
+
+

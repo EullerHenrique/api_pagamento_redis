@@ -45,6 +45,15 @@ public class TransacaoServiceImp implements TransacaoService {
 
     private final DescricaoRepository descricaoRepository;
 
+
+    //@Cacheable: Essa anotação indica que o método aciona uma operação de criação de cache.
+    //Cada vez que um método anotado é invocado, o comportamento de cache será aplicado, verificando se o método
+    //já foi invocado para os argumentos fornecidos.
+    //Se nenhum valor for encontrado no cache para a chave computada, o método de destino será invocado e o valor
+    //retornado será armazenado no cache associado.
+    //cacheNames: Nome do cache.
+    //key: Chave única para o cache.
+
     @Override
     @Cacheable(cacheNames = "transacao", key="#id")
     public TransacaoDTO procurarPeloId(Long id) throws TransacaoInexistenteException {
@@ -67,6 +76,8 @@ public class TransacaoServiceImp implements TransacaoService {
         }
     }
 
+    //@CacheEvict: Essa anotação indica que o método aciona uma operação de remoção de cache.
+    //allEntries = true: Remove todos os valores do cache associado ao nome especificado.
     @Override
     @CacheEvict(cacheNames = "transacao", allEntries = true)
     public TransacaoDTO pagar(Transacao transacao) throws InsercaoNaoPermitidaException {
@@ -83,6 +94,11 @@ public class TransacaoServiceImp implements TransacaoService {
     }
 
     @Override
+    //@CachePut: Essa anotação indica que o método aciona uma operação de atualização de cache.
+    //Ao contrário da anotação @Cacheable, essa anotação não faz com que o método recomendado seja ignorado.
+    //Em vez disso, sempre faz com que o método seja invocado e seu resultado seja armazenado no cache associado,
+    //ou seja, permite que o cache associado seja atualizado.
+
     @CachePut(cacheNames = "transacao", key="#id")
     public TransacaoDTO estornar(Long id) throws TransacaoInexistenteException {
 
